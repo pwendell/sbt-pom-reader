@@ -1,5 +1,9 @@
 name := "sbt-pom-reader"
 
+version := "1.0-SNAPSHOT"
+
+scalaVersion := "2.10.3"
+
 organization := "com.typesafe.sbt"
 
 sbtPlugin := true

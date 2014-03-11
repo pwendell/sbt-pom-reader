@@ -12,6 +12,7 @@ import org.apache.maven.model.building.{
   DefaultModelBuilderFactory
 }
 import collection.JavaConverters._
+import collection.JavaConversions._
 import java.util.Locale
 import org.apache.maven.model.resolution.ModelResolver
 import org.apache.maven.artifact.resolver.DefaultArtifactResolver
@@ -42,7 +43,7 @@ class MvnPomResolver(system: RepositorySystem, localRepo: File) {
      
    }
    
-   def loadEffectivePom(pomFile: File, repositories: Seq[RemoteRepository]): Model =
+   def loadEffectivePom(pomFile: File, repositories: Seq[RemoteRepository], profiles: Seq[String]): Model =
      try {
        val request = new DefaultModelBuildingRequest
        request setLocationTracking true
@@ -52,7 +53,7 @@ class MvnPomResolver(system: RepositorySystem, localRepo: File) {
        // TODO - Pass as arguments?
        request setSystemProperties systemProperties
        request setUserProperties userProperties
-       // TODO - profiles?
+       request setActiveProfileIds profiles
        // TODO - Model resolver?
        request setModelResolver modelResolver
        (modelBuilder build request).getEffectiveModel
