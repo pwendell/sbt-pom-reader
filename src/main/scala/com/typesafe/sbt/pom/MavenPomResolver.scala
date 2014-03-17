@@ -52,8 +52,10 @@ class MvnPomResolver(system: RepositorySystem, localRepo: File) {
        request setValidationLevel ModelBuildingRequest.VALIDATION_LEVEL_STRICT
        // TODO - Pass as arguments?
        request setSystemProperties systemProperties
+       systemProperties.foreach(println _)
        request setUserProperties userProperties
        request setActiveProfileIds profiles
+       println("Using profiles: " + profiles)
        // TODO - Model resolver?
        request setModelResolver modelResolver
        (modelBuilder build request).getEffectiveModel
@@ -64,6 +66,7 @@ class MvnPomResolver(system: RepositorySystem, localRepo: File) {
      }
    // TODO - Allow these to be specified...
    val userProperties = new java.util.Properties
+   userProperties.setProperty("hadoop.version", "2.2.0")
    
    lazy val systemProperties = {
      val props = new java.util.Properties
